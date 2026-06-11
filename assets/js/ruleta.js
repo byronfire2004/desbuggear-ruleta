@@ -33,12 +33,11 @@ const colores = [
     "morado"
 ]
 
-function lanzarRuleta(min, max) {
-    const numeroAleatorio = Math.random() // entre 0 y <1
+function aleatorioDesdeArreglo(arreglo) {
+    const index = lanzarRuleta(0, arreglo.length - 1)
+    const elementoArreglo = arreglo[index]
 
-    const resultado = Math.floor(numeroAleatorio * (max - min + 1)) + min
-
-    return resultado
+    return { index, elementoArreglo }  // devuelve los dos
 }
 
 function aleatorioDesdeArreglo(arreglo) {
