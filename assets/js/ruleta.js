@@ -37,14 +37,7 @@ function aleatorioDesdeArreglo(arreglo) {
     const index = lanzarRuleta(0, arreglo.length - 1)
     const elementoArreglo = arreglo[index]
 
-    return { index, elementoArreglo }  // devuelve los dos
-}
-
-function aleatorioDesdeArreglo(arreglo) {
-    const index = lanzarRuleta(0, arreglo.length - 1)
-    const elementoArreglo = arreglo[index]
-
-    return elementoArreglo
+    return { index, elementoArreglo }  // devuelve los dos, nombre y lo q falta (numero para que al sacar el nombre tmb te de el numero y con eso usar )
 }
 
 function renderizarResultado(idElement, texto) {
@@ -56,6 +49,6 @@ function renderizarResultado(idElement, texto) {
 const getRandomButton = document.querySelector("#getRandom")
 
 getRandomButton.addEventListener("click", () => {
-    const resultado = aleatorioDesdeArreglo(participantes)  
+    const resultado = aleatorioDesdeArreglo(participantes)
     renderizarResultado("resultado", resultado)
 })
