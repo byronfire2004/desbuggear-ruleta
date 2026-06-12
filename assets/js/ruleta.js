@@ -33,16 +33,33 @@ const colores = [
     "morado"
 ]
 
+const yaParticiparon = []
+
+function lanzarRuleta(min, max) {
+    const numeroAleatorio = Math.random()
+    const resultado = Math.floor(numeroAleatorio * (max - min + 1)) + min
+    return resultado
+}
+
 function aleatorioDesdeArreglo(arreglo) {
+
+    if (arreglo.length === 0) {
+        renderizarResultado("resultado", "Ya fuee")
+        setTimeout(() => window.location.reload(), 3000)
+        return
+    }
+
     const index = lanzarRuleta(0, arreglo.length - 1)
     const elementoArreglo = arreglo[index]
-
-    return { index, elementoArreglo }  // devuelve los dos, nombre y lo q falta (numero para que al sacar el nombre tmb te de el numero y con eso usar )
+    participantes.splice(participantes.indexOf(elementoArreglo), 1)
+    yaParticiparon.push(elementoArreglo)
+    console.log("faltan:", participantes)
+    console.log("ya pasaron:", yaParticiparon)
+    return elementoArreglo
 }
 
 function renderizarResultado(idElement, texto) {
     const elementoARenderizar = document.getElementById(idElement)
-
     elementoARenderizar.textContent = texto
 }
 
@@ -50,5 +67,7 @@ const getRandomButton = document.querySelector("#getRandom")
 
 getRandomButton.addEventListener("click", () => {
     const resultado = aleatorioDesdeArreglo(participantes)
-    renderizarResultado("resultado", resultado)
+    if (resultado) {
+        renderizarResultado("resultado", resultado)
+    }
 })
