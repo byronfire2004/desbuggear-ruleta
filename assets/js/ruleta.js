@@ -26,48 +26,49 @@ const participantes = [
     "Damazo Sepúlveda"
 ];
 
-const colores = [
-    "azul",
-    "rojo",
-    "violeta",
-    "morado"
-]
+const yaParticiparon = [];
 
-const yaParticiparon = []
+function renderizarLista() {
+    const lista = document.getElementById("lista-pendientes");
+    const contador = document.getElementById("contador");
+
+    lista.innerHTML = "";
+
+    participantes.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = p;
+        lista.appendChild(li);
+    });
+
+    yaParticiparon.forEach(p => {
+        const li = document.createElement("li");
+        li.textContent = p;
+        li.classList.add("ya-salio");
+        lista.appendChild(li);
+    });
+
+    contador.textContent = `Quedan ${participantes.length} de ${participantes.length + yaParticiparon.length} participantes`;
+}
 
 function lanzarRuleta(min, max) {
-    const numeroAleatorio = Math.random()
-    const resultado = Math.floor(numeroAleatorio * (max - min + 1)) + min
-    return resultado
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function aleatorioDesdeArreglo(arreglo) {
-
-    if (arreglo.length === 0) {
-        renderizarResultado("resultado", "Ya fuee")
-        setTimeout(() => window.location.reload(), 3000)
-        return
+function aleatorioDesdeArreglo() {
+    if (participantes.length === 0) {
+        document.getElementById("resultado").textContent = "¡Ya participaron todos!";
+        setTimeout(() => location.reload(), 3000);
+        return;
     }
 
-    const index = lanzarRuleta(0, arreglo.length - 1)
-    const elementoArreglo = arreglo[index]
-    participantes.splice(participantes.indexOf(elementoArreglo), 1)
-    yaParticiparon.push(elementoArreglo)
-    console.log("faltan:", participantes)
-    console.log("ya pasaron:", yaParticiparon)
-    return elementoArreglo
+    const index = lanzarRuleta(0, participantes.length - 1);
+    const elegido = participantes.splice(index, 1)[0];
+    yaParticiparon.push(elegido);
+
+    document.getElementById("resultado").textContent = elegido;
+    renderizarLista();
 }
 
-function renderizarResultado(idElement, texto) {
-    const elementoARenderizar = document.getElementById(idElement)
-    elementoARenderizar.textContent = texto
-}
+document.getElementById("getRandom").addEventListener("click", aleatorioDesdeArreglo);
 
-const getRandomButton = document.querySelector("#getRandom")
-
-getRandomButton.addEventListener("click", () => {
-    const resultado = aleatorioDesdeArreglo(participantes)
-    if (resultado) {
-        renderizarResultado("resultado", resultado)
-    }
-})
+renderizarLista();
