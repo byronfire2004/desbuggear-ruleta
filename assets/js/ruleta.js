@@ -24,7 +24,7 @@ const participantes = [
     "Babinsky Magloire",
     "Pablo Canto",
     "Damazo Sepúlveda"
-];
+].filter(p => p !== undefined && p !== ""); // filtra nombres vacíos o indefinidos
 
 const yaParticiparon = [];
 
@@ -63,8 +63,14 @@ function aleatorioDesdeArreglo() {
 
     const index = lanzarRuleta(0, participantes.length - 1);
     const elegido = participantes.splice(index, 1)[0];
-    yaParticiparon.push(elegido);
 
+    // si el nombre es undefined no lo muestra
+    if (!elegido) {
+        document.getElementById("resultado").textContent = "Nombre no disponible.";
+        return;
+    }
+
+    yaParticiparon.push(elegido);
     document.getElementById("resultado").textContent = elegido;
     renderizarLista();
 }
